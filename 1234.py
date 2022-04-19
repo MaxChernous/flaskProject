@@ -1,3 +1,4 @@
+import flask
 from flask import Flask, request
 from jinja2 import FileSystemLoader, Environment
 from pymongo import MongoClient
@@ -11,7 +12,7 @@ tasks = database.tasks
 
 @app.route("/")
 def get_info():
-    return templateLoader.get_template('123.html').render()
+    return flask.render_template("123.html")
 
 
 @app.route("/Tasks", methods=['POST'])

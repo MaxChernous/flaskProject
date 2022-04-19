@@ -1,6 +1,12 @@
 from flask import Flask
 import flask
 from flask import request
+import random
+from flask import make_response
+
+def is_reg(login):
+    return True
+
 
 app = Flask(__name__)
 
@@ -11,16 +17,18 @@ def home():
 
 
 @app.route('/action_page.php', methods=['GET', 'POST'])
-def parse_request():
-    data = request.data
-    res = Flask.make_response("Setting a cookie")
-    res.set_cookie("new_session")
+def reg_parse():
     print(request.values['login'])
     print(request.values['psw'])
+    if not is_reg(request.values['login']):
+        set_cookies(request)
+        resp=make_response(flask.render_template("main.html"))
+        resp.set_cookie('userID')
+        return flask.render_template("main.html")  # data is empty
 
-    return flask.render_template("main.html")  # data is empty
-    # need posted data here
 
+def set_cookies(req):
+    cookie = str(random.randint(-10 ** 200, 10 ** 200))
 
 @app.route('/scrum')
 def main():
