@@ -1,27 +1,30 @@
 from flask import Flask
-import flask
+import flask as f
 from flask import request
-
-app = Flask(__name__)
-
+from jinja2 import FileSystemLoader, Environment
+from pymongo import MongoClient
+app = f.Flask(__name__)
+templateLoader = Environment(loader=FileSystemLoader(searchpath='./template'))
+client = MongoClient('localhost', 27017)
+database = client.test_database
+tasks = database.tasks
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
-    return flask.render_template('register.html')
+    return f.render_template('register.html')
 
 
 @app.route('/action_page.php', methods=['GET', 'POST'])
 def parse_request():
-    data = request.data
-    print(request.values['login'])
-    print(request.values['psw'])
-    return flask.render_template("main.html")  # data is empty
-    # need posted data here
+    name = f.request.values['login']
+    key = f.request.values['psw']
+    tasks.insert_one({name: key})
+    return f.render_template("main.html")
 
 
 @app.route('/scrum')
 def main():
-    return flask.render_template('main.html')
+    return f.render_template('main.html')
 
 
 # @app.get()
