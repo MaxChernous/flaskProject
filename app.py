@@ -19,7 +19,7 @@ app = Flask(__name__)
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
-    return flask.render_template('register.html')
+    return flask.render_template('gt.html')
 
 
 @app.route('/action_page.php', methods=['GET', 'POST'])
