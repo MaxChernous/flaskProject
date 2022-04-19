@@ -13,9 +13,12 @@ def home():
 @app.route('/action_page.php', methods=['GET', 'POST'])
 def parse_request():
     data = request.data
+    res = Flask.make_response("Setting a cookie")
+    res.set_cookie("new_session")
     print(request.values['login'])
     print(request.values['psw'])
-    return flask.render_template("main.html")# data is empty
+
+    return flask.render_template("main.html")  # data is empty
     # need posted data here
 
 
