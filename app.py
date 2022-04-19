@@ -1,41 +1,25 @@
-from flask import Flask
 import flask
-from flask import request
-import random
-from flask import make_response
+from jinja2 import FileSystemLoader, Environment
+from pymongo import MongoClient
 
-def is_reg(login):
-    return True
-
-
-app = Flask(__name__)
-
-
-@app.route('/', methods=['GET', 'POST'])
-def home():
-    return flask.render_template('register.html')
+templateLoader = Environment(loader=FileSystemLoader(searchpath='./templates'))
+app = flask.Flask(__name__)
+client = MongoClient('localhost', 27017)
+database = client.test_database
+tasks = database.tasks
 
 
-@app.route('/action_page.php', methods=['GET', 'POST'])
-def reg_parse():
-    print(request.values['login'])
-    print(request.values['psw'])
-    if not is_reg(request.values['login']):
-        set_cookies(request)
-        resp=make_response(flask.render_template("main.html"))
-        resp.set_cookie('userID')
-        return flask.render_template("main.html")  # data is empty
+@app.route("/")
+def get_info():
+    return flask.render_template("123.html")
 
 
-def set_cookies(req):
-    cookie = str(random.randint(-10 ** 200, 10 ** 200))
+@app.route("/Tasks", methods=['POST'])
+def post_info():
+    name = flask.request.form.get('names')
+    key = flask.request.form.get('keys')
+    tasks.insert_one({name: key})
+    return "Успешная Регистрация"
 
-@app.route('/scrum')
-def main():
-    return flask.render_template('main.html')
 
-
-# @app.get()
-
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=3000)
+app.run(host='0.0.0.0', port=3000)
