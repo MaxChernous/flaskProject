@@ -10,9 +10,6 @@ database = client.test_database
 tasks = database.tasks
 
 
-def is_reg(login):
-    return False
-
 
 app = Flask(__name__)
 
