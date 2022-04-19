@@ -1,11 +1,17 @@
-from flask import Flask
-import flask
-from flask import request
 import random
 from flask import make_response
+import flask
+from flask import Flask, request
+from jinja2 import FileSystemLoader, Environment
+from pymongo import MongoClient
+
+client = MongoClient('localhost', 27017)
+database = client.test_database
+tasks = database.tasks
+
 
 def is_reg(login):
-    return True
+    return False
 
 
 app = Flask(__name__)
@@ -21,14 +27,12 @@ def reg_parse():
     print(request.values['login'])
     print(request.values['psw'])
     if not is_reg(request.values['login']):
-        set_cookies(request)
-        resp=make_response(flask.render_template("main.html"))
-        resp.set_cookie('userID')
-        return flask.render_template("main.html")  # data is empty
+        resp = make_response(flask.render_template("main.html"))
+        cookie = str(random.randint(-(10 ** 200), 10 ** 200))
+        resp.set_cookie('userID', cookie)
+        return resp
+    return "ты долбаеб"
 
-
-def set_cookies(req):
-    cookie = str(random.randint(-10 ** 200, 10 ** 200))
 
 @app.route('/scrum')
 def main():
