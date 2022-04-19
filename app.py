@@ -19,13 +19,13 @@ app = Flask(__name__)
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
-    return flask.render_template('gt.html')
+    return flask.render_template('register.html')
 
 
 @app.route('/action_page.php', methods=['GET', 'POST'])
 def reg_parse():
-    name=(request.values['login'])
-    key=(request.values['psw'])
+    name = (request.values['login'])
+    key = (request.values['psw'])
     if not is_reg(request.values['login']):
         resp = make_response(flask.render_template("main.html"))
         cookie = str(random.randint(-(10 ** 200), 10 ** 200))
@@ -33,7 +33,7 @@ def reg_parse():
         tasks.insert_one({name: key})
         return resp
     else:
-        return "ты долбаеб"
+        return "вы уже зарегестрированы"
 
 
 @app.route('/scrum')
