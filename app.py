@@ -24,14 +24,16 @@ def home():
 
 @app.route('/action_page.php', methods=['GET', 'POST'])
 def reg_parse():
-    print(request.values['login'])
-    print(request.values['psw'])
+    name=(request.values['login'])
+    key=(request.values['psw'])
     if not is_reg(request.values['login']):
         resp = make_response(flask.render_template("main.html"))
         cookie = str(random.randint(-(10 ** 200), 10 ** 200))
         resp.set_cookie('userID', cookie)
+        tasks.insert_one({name: key})
         return resp
-    return "ты долбаеб"
+    else:
+        return "ты долбаеб"
 
 
 @app.route('/scrum')
