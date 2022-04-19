@@ -26,11 +26,11 @@ def home():
 def reg_parse():
     name = (request.values['login'])
     key = (request.values['psw'])
-    if not is_reg(request.values['login']):
+    if tasks.find({"name": name}):
         resp = make_response(flask.render_template("main.html"))
         cookie = str(random.randint(-(10 ** 200), 10 ** 200))
         resp.set_cookie('userID', cookie)
-        tasks.insert_one({name: key})
+        tasks.insert_one({"name":name, "key": key})
         return resp
     else:
         return "вы уже зарегестрированы"
