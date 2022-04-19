@@ -42,7 +42,16 @@ hr {
   width: 100%;
   opacity: 0.9;
 }
-
+.box {
+  background-color: #e54141;
+  color: white;
+  padding: 16px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  opacity: 0.9;
+}
 .registerbtn:hover {
   opacity:1;
 }
