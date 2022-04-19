@@ -23,7 +23,7 @@ def home():
 def reg_parse():
     name = (request.values['login'])
     key = (request.values['psw'])
-    if tasks.find({"name": name}):
+    if not list(tasks.find({"name": name})) != []:
         resp = make_response(flask.render_template("main.html"))
         cookie = str(random.randint(-(10 ** 200), 10 ** 200))
         resp.set_cookie('userID', cookie)
