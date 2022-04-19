@@ -2,7 +2,7 @@ from flask import Flask, request
 from jinja2 import FileSystemLoader, Environment
 from pymongo import MongoClient
 
-templateLoader = Environment(loader=FileSystemLoader(searchpath='./tem'))
+templateLoader = Environment(loader=FileSystemLoader(searchpath='./template'))
 app = Flask(__name__)
 client = MongoClient('localhost', 27017)
 database = client.test_database
