@@ -10,9 +10,12 @@ def home():
     return flask.render_template('register.html')
 
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/action_page.php', methods=['GET', 'POST'])
 def parse_request():
-    data = request.data  # data is empty
+    data = request.data
+    print(request.values['login'])
+    print(request.values['psw'])
+    return flask.render_template("main.html")# data is empty
     # need posted data here
 
 
