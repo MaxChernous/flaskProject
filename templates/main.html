@@ -5,6 +5,11 @@
 		<input type = "text" name = "board_name"/>
 		<input type = "submit" value = "Создать доску!">
 	</form>
+	<form method="get" action = '/list/new_user'>
+		<input type = "text" name = "id"/>
+		<input type = "submit" value = "Присоедениться к доске!">
+	</form>
+	
 	<ul>
         {% for desk in lst: %}
         <p>{{ desk }}</p>
