@@ -8,7 +8,11 @@ from pymongo import MongoClient
 client = MongoClient('localhost', 27017)
 database = client.test_database
 tasks = database.tasks
+
+database = client.test_database
+cookie_id = database.cookie
 # tasks.delete_many({})
+# cookie_id.delete_many({})
 
 
 app = Flask(__name__)
@@ -24,17 +28,29 @@ def reg_parse():
     name = (request.values['login'])
     key = (request.values['psw'])
     if not tasks.count_documents({"name": name}):
-        tasks.insert_one({"name": name, "key": key, "tasks":[]})
-        resp = make_response(flask.render_template("login.html"))
-        cookie = str(tasks.find({"name": name})[0]["_id"])
+        resp = make_response(flask.render_template("main.html"))
+        cookie = str(random.randint(-(10 ** 200), 10 ** 200))
+        id = str(random.randint(-(10 ** 200), 10 ** 200))
         resp.set_cookie('userID', cookie)
+        tasks.insert_one({"name": name, "key": key})
+        cookie_id.insert_one({name: id})
+        return resp
     else:
-        resp = make_response(flask.render_template("login.html"))
-        resp.set_cookie(tasks.find({"name": name})[0]["_id"])
-    return resp
+        resp = (flask.render_template("register.html"))
+        resp += "<p class=text>извините данный логин уже занят, авторизуйтесь</p>"
+        return resp
 
-@app.route('/noteslist')
-def main():    
+
+@app.route('/auth', methods=['GET', 'POST'])
+def autorize():
+    name = (request.values['login'])
+    key = (request.values['psw'])
+    if not tasks.count_documents({"name": name}):
+        if tasks.find({"name": name})["key"]==key:
+            print("заебись")
+
+@app.route('/scrum')
+def main():
     return flask.render_template('main.html')
 
 
