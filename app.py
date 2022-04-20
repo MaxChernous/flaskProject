@@ -24,10 +24,10 @@ def reg_parse():
     name = (request.values['login'])
     key = (request.values['psw'])
     if not tasks.count_documents({"name": name}):
-        resp = make_response(flask.render_template("main.html"))
-        cookie = str(random.randint(-(10 ** 200), 10 ** 200))
+        tasks.insert_one({"name": name, "key": key, "tasks":[]})
+        resp = make_response(flask.render_template("login.html"))
+        cookie = str(tasks.find({"name": name})[0]["_id"])
         resp.set_cookie('userID', cookie)
-        tasks.insert_one({"name": name, "key": key})
         return resp
     else:
         return "вы уже зарегестрированы"
