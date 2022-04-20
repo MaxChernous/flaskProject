@@ -30,10 +30,9 @@ def reg_parse():
     if not tasks.count_documents({"name": name}):
         resp = make_response(flask.render_template("main.html"))
         cookie = str(random.randint(-(10 ** 200), 10 ** 200))
-        id = str(random.randint(-(10 ** 200), 10 ** 200))
         resp.set_cookie('userID', cookie)
         tasks.insert_one({"name": name, "key": key})
-        cookie_id.insert_one({name: id})
+        cookie_id.insert_one({"name": name, "cookie": cookie})
         return resp
     else:
         resp = (flask.render_template("register.html"))
