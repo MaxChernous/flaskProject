@@ -15,7 +15,7 @@ app = Flask(__name__)
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
-    return flask.render_template('gt.html')
+    return flask.render_template('index.html')
 
 
 @app.route('/reg', methods=['GET', 'POST'])
