@@ -2,11 +2,10 @@ import random
 from flask import make_response
 import flask
 from flask import Flask, request
-from jinja2 import FileSystemLoader, Environment
 from pymongo import MongoClient
 
 def _64():
-    alpf = 'abcdefghigklmnopqrstuvwxyzABCDEFGHIGKLMNOPQRSTUVWXYZ1234567890#$'
+    alpf = 'abcdefghigklmnopqrstuvwxyzABCDEFGHIGKLMNOPQRSTUVWXYZ1234567890_.'
     n = ''
     for i in range(10): n+=alpf[random.randint(0, 63)]
     return n
@@ -23,7 +22,6 @@ app = Flask(__name__)
 def home():
     return flask.render_template('gt.html')
 
-
 @app.route('/reg', methods=['GET', 'POST'])
 def reg_parse():
     name = (request.values['login'])
@@ -38,7 +36,6 @@ def reg_parse():
         resp += "<p class=text>извините данный логин уже занят</p>"
     return resp
 
-
 @app.route('/auth', methods=['GET', 'POST'])
 def authorize():
     name = (request.values['login'])
@@ -52,16 +49,13 @@ def authorize():
         return "неверный пароль"
     return "нет логина"
 
-
 @app.route("/form_reg")
 def reg_send():
     return flask.render_template("register.html")
 
-
 @app.route("/form_auth")
 def auth_send():
     return flask.render_template("authorize.html")
-
 
 @app.route('/list')
 def main():
@@ -76,12 +70,13 @@ def add():
     boards.insert_one({"id": _64(), "name": request.form.get("board_name"), "users": [userID]})
     return flask.redirect('/list')
 
-@app.route('/list/new_user', methods = ['GET'])
+@app.route('/list/new_user', methods = ['get'])
 def new_user(): # new user in list 
     userID = request.cookies.get("userID")
-    (boards.find_one({"id": request.form.get("id")})["users"]).append(userID)
+    boardID = request.args.get("id")
+    boards.update_one({"id": boardID}, {"$push": {"users": userID}})
+    boards.find({'id': boardID})[0];
     return flask.redirect('/list')
-
     
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=3000)

@@ -12,7 +12,7 @@
 	
 	<ul>
         {% for desk in lst: %}
-        <p>{{ desk }}</p>
+	<p>Название: {{ desk["name"] }}; ID: {{ desk["id"] }}; Участники: {{ desk["users"] }}</p>
         {% endfor %}
         </ul>
 <a class="container">main</a>
