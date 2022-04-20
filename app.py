@@ -20,7 +20,7 @@ app = Flask(__name__)
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
-    return flask.render_template('register.html')
+    return flask.render_template('gt.html')
 
 
 @app.route('/reg', methods=['GET', 'POST'])
@@ -42,12 +42,25 @@ def reg_parse():
 
 
 @app.route('/auth', methods=['GET', 'POST'])
-def autorize():
+def authorize():
     name = (request.values['login'])
     key = (request.values['psw'])
     if not tasks.count_documents({"name": name}):
-        if tasks.find({"name": name})["key"]==key:
-            print("заебись")
+        if tasks.find({"name": name})["key"] == key:
+            return "забись рега прошла"
+        return "нет пароля"
+    return "нет логина"
+
+
+@app.route("/form_reg")
+def reg_send():
+    return flask.render_template("register.html")
+
+
+@app.route("/form_auth")
+def auth_send():
+    return flask.render_template("authorize.html")
+
 
 @app.route('/scrum')
 def main():
