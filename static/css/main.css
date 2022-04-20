@@ -1,120 +1,70 @@
-* {
-  box-sizing: border-box;
-}
-body {
-      font-size: 14px;
-}
-.v9_136 {
-  width: 100%;
-    height: 100.0%;
-  background: url(".../images/v9_136.png");
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: cover;
-  opacity: 1;
-  position: absolute;
-    top: 0.0%;
-    left: 0.0%;
-  overflow: hidden;
-}
-.v2_90 {
-    width: 20.0%;
-  color: rgba(0,0,0,1);
-  position: absolute;
-    top: 19.25925925925926%;
-    left: 38.484848484848484%;
-  font-family: Times New Roman;
-  font-weight: Regular;
-      font-size: 150px;
-  opacity: 1;
-  text-align: left;
-}
-.v2_104 {
-    width: 20.606060606060606%;
-    height: 11.296296296296296%;
-  background: rgba(150,150,150,0.5600000023841858);
-  opacity: 1;
-  position: absolute;
-    top: 74.72222222222223%;
-    left: 32.07070707070707%;
-      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-}
-.v2_108 {
-    width: 14.343434343434344%;
-  color: rgba(0,0,0,1);
-  position: absolute;
-    top: 77.5%;
-    left: 35.2020202020202%;
-  font-family: Inter;
-  font-weight: Regular;
-      font-size: 50px;
-  opacity: 1;
-  text-align: left;
-}
-.v23_11 {
-    width: 9.292929292929292%;
-    height: 11.296296296296296%;
-  background: rgba(150,150,150,0.5600000023841858);
-  opacity: 1;
-  position: absolute;
-    top: 74.72222222222223%;
-    left: 55.55555555555556%;
-      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-}
-.v23_12 {
-    width: 3.585858585858586%;
-  color: rgba(0,0,0,1);
-  position: absolute;
-    top: 77.5%;
-    left: 58.38383838383838%;
-  font-family: Inter;
-  font-weight: Regular;
-      font-size: 50px;
-  opacity: 1;
-  text-align: left;
-}
-.v23_311 {
-    width: 40.60606060606061%;
-    height: 7.4074074074074066%;
-  background: rgba(242,241,238,0.6000000238418579);
-  opacity: 1;
-  position: absolute;
-    top: 45.55555555555556%;
-    left: 31.313131313131315%;
-  overflow: hidden;
-}
-.v23_312 {
-    width: 40.60606060606061%;
-    height: 7.4074074074074066%;
-  background: rgba(242,241,238,0.6000000238418579);
-  opacity: 1;
-  position: absolute;
-    top: 57.03703703703704%;
-    left: 31.313131313131315%;
-  overflow: hidden;
-}
-.v23_313 {
-    width: 7.171717171717172%;
-  color: rgba(0,0,0,1);
-  position: absolute;
-    top: 46.38888888888889%;
-    left: 23.78787878787879%;
-  font-family: Inter;
-  font-weight: Medium;
-      font-size: 50px;
-  opacity: 1;
-  text-align: left;
-}
-.v23_314 {
-    width: 12.575757575757576%;
-  color: rgba(0,0,0,1);
-  position: absolute;
-    top: 57.870370370370374%;
-    left: 18.383838383838384%;
-  font-family: Inter;
-  font-weight: Medium;
-      font-size: 50px;
-  opacity: 1;
-  text-align: left;
+/*
+Кто-то: You are not permitted to execute action 'Copy'
+Егор: пизженый код, пиши в коментах лучше, что бы не ломать код
+ */
+* {box-sizing: border-box}
+
+/* Add padding to containers */
+.container {
+  padding: 16px;
 }
 
+/* Full-width input fields */
+input[type=text], input[type=password] {
+  width: 100%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  display: inline-block;
+  border: none;
+  background: #f1f1f1;
+}
+
+input[type=text]:focus, input[type=password]:focus {
+  background-color: #ddd;
+  outline: none;
+}
+
+/* Overwrite default styles of hr */
+.text{
+  color: #e54141;
+}
+hr {
+  border: 1px solid #f1f1f1;
+  margin-bottom: 25px;
+}
+
+/* Set a style for the submit/register button */
+.registerbtn {
+  background-color: #4CAF50;
+  color: white;
+  padding: 16px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  opacity: 0.9;
+}
+.box {
+  background-color: #e54141;
+  color: white;
+  padding: 16px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  opacity: 0.9;
+}
+.registerbtn:hover {
+  opacity:1;
+}
+
+/* Add a blue text color to links */
+a {
+  color: dodgerblue;
+}
+
+/* Set a grey background color and center the text of the "sign in" section */
+.signin {
+  background-color: #f1f1f1;
+  text-align: center;
+}
