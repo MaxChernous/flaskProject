@@ -44,8 +44,8 @@ def reg_parse():
 def authorize():
     name = (request.values['login'])
     key = (request.values['psw'])
-    if not tasks.count_documents({"name": name}):
-        if tasks.find({"name": name})["key"] == key:
+    if tasks.count_documents({"name": name}):
+        if tasks.find({"name": name})[0]["key"] == key:
             return "забись рега прошла"
         return "нет пароля"
     return "нет логина"
