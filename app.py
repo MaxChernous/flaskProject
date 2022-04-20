@@ -28,13 +28,13 @@ def reg_parse():
         resp = make_response(flask.render_template("login.html"))
         cookie = str(tasks.find({"name": name})[0]["_id"])
         resp.set_cookie('userID', cookie)
-        return resp
     else:
-        return "вы уже зарегестрированы"
+        resp = make_response(flask.render_template("login.html"))
+        resp.set_cookie(tasks.find({"name": name})[0]["_id"])
+    return resp
 
-
-@app.route('/scrum')
-def main():
+@app.route('/noteslist')
+def main():    
     return flask.render_template('main.html')
 
 
