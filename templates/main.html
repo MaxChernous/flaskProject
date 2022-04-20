@@ -1,6 +1,10 @@
 <html>
 <head></head>
 <body>
+	<form method="post" action = '/list/add'>
+		<input type = "text" name = "board_name"/>
+		<input type = "submit" value = "Создать доску!">
+	</form>
 	<ul>
         {% for desk in lst: %}
         <p>{{ desk }}</p>

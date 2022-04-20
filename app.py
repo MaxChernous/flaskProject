@@ -4,11 +4,12 @@ import flask
 from flask import Flask, request
 from jinja2 import FileSystemLoader, Environment
 from pymongo import MongoClient
+from bson.objectid import ObjectId
 
 client = MongoClient('localhost', 27017)
 database = client.test_database
 tasks = database.tasks
-
+boards = database.board
 
 app = Flask(__name__)
 
@@ -23,9 +24,9 @@ def reg_parse():
     name = (request.values['login'])
     key = (request.values['psw'])
     if not tasks.count_documents({"name": name}):
-        tasks.insert_one({"id": str(random.randint(-(2 ** 200), 2 ** 200)), "name": name, "key": key, "desks":['desk 1', 'desk 2']})
+        tasks.insert_one({"name": name, "key": key})
         resp = make_response(flask.render_template("main.html"))
-        cookie = tasks.find({"name": name})[0]["id"]
+        cookie = str(tasks.find({"name": name})[0]["_id"])
         resp.set_cookie('userID', cookie)
     else:
         resp = (flask.render_template("register.html"))
@@ -40,7 +41,7 @@ def authorize():
     if tasks.count_documents({"name": name}):
         if tasks.find({"name": name})[0]["key"] == key:
             resp = make_response(flask.render_template("main.html"))
-            cookie = tasks.find({"name": name})[0]["id"]
+            cookie = str(tasks.find({"name": name})[0]["_id"])
             resp.set_cookie('userID', cookie)
             return flask.redirect("/list")
         return "нет пароля"
@@ -59,11 +60,16 @@ def auth_send():
 
 @app.route('/list')
 def main():
-    userID = request.cookies.get("userID")
-    lst = tasks.find({"id": userID})[0]["desks"]
-    print(lst) 
+    userID = ObjectId(request.cookies.get("userID"))
+    try: lst = boards.find({"users":  userID})
+    except IndexError: lst = []
     return flask.render_template("main.html", lst = lst)
-    
+
+@app.route('/list/add', methods = ['POST'])
+def add():
+    userID = ObjectId(request.cookies.get("userID"))
+    boards.insert_one({"name": request.form.get("board_name"), "users": [userID]})
+    return flask.redirect('/list')
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=3000)
