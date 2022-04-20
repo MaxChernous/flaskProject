@@ -29,7 +29,7 @@ def reg_parse():
         resp.set_cookie('userID', cookie)
     else:
         resp = (flask.render_template("register.html"))
-        resp += "<p class=text>извините данный логин уже занят, авторизуйтесь</p>"
+        resp += "<p class=text>извините данный логин уже занят</p>"
     return resp
 
 
@@ -39,7 +39,10 @@ def authorize():
     key = (request.values['psw'])
     if tasks.count_documents({"name": name}):
         if tasks.find({"name": name})[0]["key"] == key:
-            return "забись рега прошла"
+            resp = make_response(flask.render_template("main.html"))
+            cookie = tasks.find({"name": name})[0]["id"]
+            resp.set_cookie('userID', cookie)
+            return flask.redirect("/list")
         return "нет пароля"
     return "нет логина"
 
@@ -54,7 +57,7 @@ def auth_send():
     return flask.render_template("authorize.html")
 
 
-@app.route('/list', methods = ['show','GET'])
+@app.route('/list')
 def main():
     userID = request.cookies.get("userID")
     lst = tasks.find({"id": userID})[0]["desks"]
