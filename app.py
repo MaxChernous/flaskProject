@@ -10,7 +10,6 @@ database = client.test_database
 tasks = database.tasks
 
 
-
 app = Flask(__name__)
 
 
@@ -24,9 +23,9 @@ def reg_parse():
     name = (request.values['login'])
     key = (request.values['psw'])
     if not tasks.count_documents({"name": name}):
-        tasks.insert_one({"name": name, "key": key, "tasks":[]})
+        tasks.insert_one({"id": str(random.randint(-(2 ** 200), 2 ** 200)), "name": name, "key": key, "desks":['desk 1', 'desk 2']})
         resp = make_response(flask.render_template("main.html"))
-        cookie = str(tasks.find({"name": name})[0]["_id"])
+        cookie = tasks.find({"name": name})[0]["id"]
         resp.set_cookie('userID', cookie)
     else:
         resp = (flask.render_template("register.html"))
@@ -55,12 +54,13 @@ def auth_send():
     return flask.render_template("authorize.html")
 
 
-@app.route('/scrum')
+@app.route('/list', methods = ['show','GET'])
 def main():
-    return flask.render_template('main.html')
-
-
-# @app.get()
+    userID = request.cookies.get("userID")
+    lst = tasks.find({"id": userID})[0]["desks"]
+    print(lst) 
+    return flask.render_template("main.html", lst = lst)
+    
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=3000)

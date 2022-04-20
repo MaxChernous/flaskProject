@@ -1,7 +1,13 @@
 <html>
-<head>
-    <link rel="stylesheet" type="text/css" href="../static/css/main.css">
-</head>
+<head></head>
 <body>
+	<form method = "GET" action = "/list">
+		<input type = "submit" value = "Показать доски">
+	</form>
+	<ul>
+        {% for desk in lst: %}
+        <p>{{ desk }}</p>
+        {% endfor %}
+        </ul>
 <a class="container">main</a>
 </body>
