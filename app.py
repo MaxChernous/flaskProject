@@ -75,7 +75,6 @@ def new_user(): # new user in list
     userID = request.cookies.get("userID")
     boardID = request.args.get("id")
     boards.update_one({"id": boardID}, {"$push": {"users": userID}})
-    boards.find({'id': boardID})[0];
     return flask.redirect('/list')
     
 if __name__ == "__main__":
