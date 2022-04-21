@@ -74,8 +74,7 @@ def add():
 def new_user(): # new user in list 
     userID = request.cookies.get("userID")
     boardID = request.args.get("id")
-    try: boards.find_one({"users": userID})
-    except: boards.update_one({"id": boardID}, {"$push": {"users": userID}})
+    if not boards.count_documents({"users": userID}): boards.update_one({"id": boardID}, {"$push": {"users": userID}})
     return flask.redirect('/list')
     
 if __name__ == "__main__":
