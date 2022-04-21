@@ -16,7 +16,8 @@ client = MongoClient('localhost', 27017)
 database = client.test_database
 tasks = database.tasks
 boards = database.board
-
+#tasks.delete_many({})
+#boards.delete_many({})
 app = Flask(__name__)
 
 
