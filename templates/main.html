@@ -1,6 +1,7 @@
 <html>
 <head></head>
 <body>
+	<p>ваш ник: {{ nickname }}</p>
 	<form method="post" action = '/list/add'>
 		<input type = "text" name = "board_name"/>
 		<input type = "submit" value = "Создать доску!">
@@ -9,7 +10,6 @@
 		<input type = "text" name = "id"/>
 		<input type = "submit" value = "Присоедениться к доске!">
 	</form>
-	<p>ваш ник: {{ nickname }}</p>
 	<ul>
 		{% for desk in lst: %}
 		<form method="post" action="/list/board?id={{desk['id']}}">
