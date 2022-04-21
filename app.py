@@ -60,7 +60,13 @@ def auth_send():
 @app.route('/list')
 def main():
     userID = request.cookies.get("userID")
-    try: lst = boards.find({"users":  userID})
+    try: 
+        lst = list(boards.find({"users":  userID}))
+        for ind, e in enumerate(lst):
+            m = []
+            for i in e["users"]:
+                m.append(tasks.find_one({"id": i})["name"])
+            lst[ind]["users"] = m
     except IndexError: lst = []
     return flask.render_template("main.html", lst = lst)
 
