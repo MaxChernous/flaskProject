@@ -73,7 +73,7 @@ def main():
 @app.route('/list/add', methods = ['POST'])
 def add():
     userID = request.cookies.get("userID")
-    boards.insert_one({"id": _64(), "name": request.form.get("board_name"), "users": [userID]})
+    boards.insert_one({"id": _64(), "name": request.form.get("board_name"), "users": [userID], "to_do":[],"in_progress":[],"done":[]})
     return flask.redirect('/list')
 
 @app.route('/list/new_user', methods = ['get'])
@@ -82,6 +82,16 @@ def new_user(): # new user in list
     boardID = request.args.get("id")
     if not boards.count_documents({"users": userID}): boards.update_one({"id": boardID}, {"$push": {"users": userID}})
     return flask.redirect('/list')
+
+@app.route('/list/board')
+def user_board():
+    userID = request.cookies.get("userID")
+    boardID = reqest.form.get("boardID")
+    lst = boards.find_one({"id": boardID})
+    td = lst["to_do"]
+    ip = lst["in_progress"]
+    dn = lst["done"]
     
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=3000)
